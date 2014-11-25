@@ -1,0 +1,73 @@
+{
+      "top" : {
+          "container" : "toolbar",
+          "style" : {
+              "title" : "基本情報"
+          },
+          "left": [
+              {
+                  "component": "button",
+                  "style": {
+                          "text": "QR取り込み"
+                  },
+                  "event": {
+                      "onTap" : "monaca.pushPage('qrcode.html')"
+                  },
+                  "id": "button1"
+              }
+          ],
+          "right": [
+              {
+                  "component": "button",
+                  "style": {
+                          "text": "お知らせ"
+                  },
+                  "event": {
+                      "onTap": "alert('お知らせはありません');"
+                  },
+                  "id": "button2"
+              }
+          ]
+      },
+      "bottom": {
+          "container": "tabbar",
+          "id": "footer",
+          "style": {
+              "visibility": "true"
+          },
+          "items": 
+              [
+                  {
+                      "component": "tabbarItem",
+                      "style": {
+                          "text": "Questionnare",
+                          "image": "images/icon.png"
+                      },
+                      "link": "index.html"
+                  },
+                  {
+                      "component": "tabbarItem",
+                      "style": {
+                          "text": "Memo",
+                          "image": "images/icon2.png"
+                      },
+                      "link": "memo.html"
+                  },
+                  {
+                      "component": "tabbarItem",
+                      "style": {
+                          "text": "QRHTML5",
+                          "image": "images/icon3.png"
+                      },
+                      "link": "qrenc2.html"
+                  },                  {
+                      "component": "tabbarItem",
+                      "style": {
+                          "text": "QR code",
+                          "image": "images/icon3.png"
+                      },
+                      "link": "qrshow.html"
+                  }
+              ]
+      }
+  }

@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<widget xmlns="http://www.w3.org/ns/widgets" id="your.app.name" version="1.0">
-  <name>CANDY</name>
+<widget xmlns="http://www.w3.org/ns/widgets" id="com.quologic.gumicandy" version="0.0.1">
+  <name>GumiCandy</name>
   <description/>
   <author/>
-  <access origin="*"/>
   <preference name="loglevel" value="ERROR"/>
-  <preference name="keepRunning" value="true"/>
-  <preference name="disallowOverscroll" value="true"/>
   <feature name="App">
     <param name="android-package" value="org.apache.cordova.App"/>
   </feature>
@@ -76,4 +73,7 @@
   <feature name="Monaca">
     <param name="android-package" value="mobi.monaca.framework.plugin.MonacaPlugin"/>
   </feature>
-<preference name="monaca:DisableCookie" value="false"/><preference name="monaca:ExtractAssets" value="false"/><preference name="monaca:SplashBackground" value="#cccccc"/><preference name="monaca:AutoHideSplashScreen" value="true"/><preference name="monaca:androidVersionCode" value="1"/></widget>
+  <access origin="*"/>
+  <preference name="keepRunning" value="true"/>
+  <preference name="disallowOverscroll" value="true"/>
+<preference name="monaca:DisableCookie" value="false"/><preference name="monaca:ExtractAssets" value="false"/><preference name="monaca:SplashBackground" value="#8AA5FF"/><preference name="monaca:AutoHideSplashScreen" value="true"/><preference name="monaca:androidVersionCode" value="1"/></widget>

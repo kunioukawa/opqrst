@@ -1,21 +1,325 @@
-<!DOCTYPE HTML>
-<html ng-app="myApp">
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <script src="components/loader.js"></script>
+    <link rel="stylesheet" href="components/loader.css" />
+    <script src="js/memo.js"></script>
+    <script src="js/qr.js"></script>
+    <link rel="stylesheet" href="css/style.css" />
+    <script>
+    monaca.viewport({ width: 320 });
+    var arData = new Array(19);
+
+
+//データベース作成
+    document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+        //データベースを作成して、質問を表示します。
+        createDB()
+        
+    }
     
-    <!-- monaca plugin loader -->
-    <script src="components/loader.js"></script>    
-    <link rel="stylesheet" href="components/loader.css">    
+//jQueryのサンプル
+    $(document).ready(function(){
+//        $("p").append("<b>Hello</b>");
+    });
+
     
-    <!-- Your CSS -->
-    <link rel="stylesheet" href="styles/app.css">
-    
-    <!-- app main file -->
-    <script src="js/app.js"></script>  
+    function executeQuery(tx) {
+        //質問が入ったテーブル構造です。
+        tx.executeSql('DROP TABLE IF EXISTS QuestionnaireTable');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS QuestionnaireTable (QUESTION_CODE unique, QUESTION, SHORTQ, ANSWER, DESCRIPTION)');
+        //定義完了
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K100","連絡してもよい電話番号","電話","（）","Inputbox")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K101","現在の体重(kg)","体重","（）","Inputbox")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K102","生活の場","生活","自宅 、幼稚園、 保育園、小学校、中学校、その他（）","Radio")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K103","妊娠中の異常","妊娠中異常","なし、あり（）","Radio")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K105","分娩","分娩","普通、吸引、鉗子、帝王切開、その他（）","Radio")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K106","出生体重(g)","出生体重","（）","Inputbox")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K107","出生時の状態","出産","良、不良","Radio")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K108","出生時の処置","出生時処置","なし、保育器、光線療法、その他（）","Radio")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K109","乳幼児健診での異常の指摘","検診異常","なし、あり（）","Radio")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K201","入院・手術・大きな病気のご経験はありますか","既往（大）","なし、あり（）","Radio")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K200","今までにかかった病気を教えてください","既往","はしか、風疹、水痘、おたふく、百日咳、喘息、ひきつけ、アレルギー性鼻炎、アレルギー性結膜炎、じんましん、アレルギー、その他（）","Checkbox")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K210","アレルギーはありますか","アレルギー","なし、あり（）","Radio")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K220","服用している薬はありますか","服用","なし、あり（）","Radio")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K230","お薬で副作用を起こしたことはありますか","副作用","なし、あり（）","Radio")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K240","お薬手帳を持参していますか","お薬手帳","はい、いいえ、持っていない","Radio")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K250","電子お薬手帳を使っていますか","電子薬手帳","はい、いいえ","Radio")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K260","接種済みの予防接種を選んでください","予防接種","BCG、ポリオ1 回目、ポリオ2 回目、DPT（三種混合）Ⅰ期 1 回目、DPT2 回目、DPT3 回目、DPT追加、DT（二種混合）、日本脳炎Ⅰ期 1 回目、日本脳炎2 回目、日本脳炎追加、日本脳炎Ⅱ期、MR（麻疹・風疹）Ⅰ期、MRⅡ期、MRⅢ期、MRⅣ期、ムンプス（流行性耳下腺炎・おたふくかぜ）、1水痘（みずぼうそう）、Hib1 回目、Hib2 回目、Hib3 回目、Hib追加、肺炎球菌1 回目、肺炎球菌2 回目、肺炎球菌3 回目　、肺炎球菌追加、子宮頸がん1 回目、子宮頸がん2 回目、子宮頸がん3 回目","Checkbox")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K290","家族構成について教えて下さい","家族構成","母、父、姉、兄、妹、弟、その他","Checkbox")');
+        tx.executeSql('INSERT INTO QuestionnaireTable (QUESTION_CODE, QUESTION, SHORTQ, ANSWER, DESCRIPTION) VALUES ("1K300","同居している家族（自分も含めて）の人数","人数","（）名","Inputbox")');
+
+
+    }
+ 
+    // データベースに問い合わせ
+    //
+    function queryDB(tx) {
+        tx.executeSql('SELECT * FROM QuestionnaireTable', [], querySuccess, errorCB);
+    }
+
+    // 問い合わせ成功時のコールバック
+    //
+    function querySuccess(tx, results) {
+        var len = results.rows.length;
+        //window.alert("データベースには " + len + " 行あります。");
+        var cc = 0;
+        //オブジェクトのIDは"i"+番号(idc)で決定する。
+        var idc = 0;
+        for (var i=0; i<len; i++){
+            // 質問の挿入 class outline
+            $("#add").append($('<br/><p class="outline">' + results.rows.item(i).QUESTION + '</p><br/>'));
+            //配列に質問を入れる
+            arData[i]=(results.rows.item(i).SHORTQ);
+            //console.log(arData[i]);
+            //idcをひとつ繰り上げる
+            idc++
+            var s = results.rows.item(i).ANSWER
+            //console.log(s);
+            // 答えが二つ以上ならばpos>0、Inputboxが必要な場合にはpos2>0
+            var pos = results.rows.item(i).ANSWER.search("、")
+            var pos2 = results.rows.item(i).ANSWER.search("（）")
+            // 答えの右の（）を削除する
+            if(pos2>0){
+                    s = results.rows.item(i).ANSWER.replace("（）", "");
+                    //console.log(s);
+                }
+            // ボタンがチェックボックスかラジオボタンか
+            var corr = results.rows.item(i).DESCRIPTION
+            if(pos>0){
+                // 答えを分割して配列ssに格納する
+                var ss = s.split("、");
+                //チェックボックスの配置
+                if (corr == "Checkbox"){              
+                    $("#add").append('<div class="check-group">');
+                    for (j in ss) {
+                        var bt = "button" + cc
+                        var bt2 = "#button" + cc
+//                        //$('#add').append($('<input type="button" id="' + bt + '" class="button2" value =' + ss[j] + '>'));
+                        //console.log('<input type="checkbox" id="' + bt + '" value ="' + ss[j] + '" name="Q' + i + '">')
+                        $('#add').append($('<input type="checkbox" id="' + bt + '" value ="' + ss[j] + '" name="Q' + i + '">'));
+                        $('#add').append($('<label for="' + bt + '">' + ss[j] + '</label>'));
+                        $('#add').append(" ")
+                         //bind a action to new element which is add a moment ago.
+                        $(bt2).on("click", { value : bt }, function(event) {
+                        //alert(event.data.value);
+                        　　//チェックボックスが押された時のイベント
+                            //$('#add').append( event.data.value );
+                        }); 
+                        //$(bt2).append($(class"button2"));
+                    cc++
+                    }
+                    $("#add").append($('</div>'));
+                //ラジオボタンの配置
+                }else if (corr == "Radio"){
+                   
+                    $("#add").append('<div data-role="controlgroup" data-type="horizontal">');
+                        for (j in ss) {
+                            var bt = "button" + cc
+                            var bt2 = "#button" + cc
+                            //$("#log").append('radio<br>input type="radio" name="radio" id="' + bt + '" value =' + ss[j]);
+                            //$('#add').append($('<input type="button" id="' + bt + '" class="button2" value =' + ss[j] + '>'));
+                                
+                                $('#add').append($('<input type="radio" name="Q' + i + '" id="' + bt + '" value ="' + ss[j] + '">'));
+                                $('#add').append($('<label for="' + bt + '">' + ss[j] + '</label>'));
+                                //console.log('<input type="radio" name="Q' + i + '" id="' + bt + '" value ="' + ss[j] + '">')
+                             //bind a action to new element which is add a moment ago.
+                            $(bt2).on("click", { value : bt }, function(event) {
+                            //alert(event.data.value);
+                            //ラジオボタンが押された時のイベント
+                                //$('#log').append( event.data.value );
+                            }); 
+                            //$(bt2).append($(class"button2"));
+                        cc++
+                        }
+                    $("#add").append("</div> ");
+                    }
+                
+                
+                if(pos2>0){
+                    $('#add').append($('<textarea name="QQ' + i + '" rows="1" class="textbox" cols="40" id="QQ' + i + '"></textarea>'));
+                }
+                $("#add").append("<br>")
+            }else{
+                //$('#add').append($('<input type="text" name="text" id="' + bt + '">' ));
+                $('#add').append($('<textarea name="QQ' + i + '" rows="1" class="textbox" cols="40" id="QQ' + i + '"></textarea>'));
+            }
+        
+        }
+        monaca.splashScreen.hide();
+    }
+
+    // トランザクション失敗時のコールバック
+    //
+    function errorCB(err) {
+        console.log("SQL 実行中にエラーが発生しました: "+err.code);
+    }
+
+    // トランザクション成功時のコールバック
+    //
+    function successCB() {
+        var db = window.openDatabase("Database", "1.0", "MedDatabase", 200000);
+        db.transaction(queryDB, errorCB);
+    }
+
+   
+    function createDB(){
+
+        var db = window.openDatabase("Database", "1.0", "MedDatabase", 200000);
+        db.transaction(executeQuery, errorCB, successCB);
+ 
+    }      
+
+//データベース作成終了
+//入力したデータの収集
+    function checkvalue(){
+        var chkvalue = "|"
+        chkvalue += "氏名" + $("#myname").val() + "|";
+        chkvalue += "年齢" + $("#myage").val() + "|";
+        for (var i=0; i<19; i++){
+            //質問の挿入
+            chkvalue += arData[i]+":";
+            //console.log(arData[i]);
+            //チェックボックスの値取得
+            if(eval("document.Questionnare.Q" + i) && eval("document.Questionnare.Q"+i+".length")){
+                var len2 = eval("document.Questionnare.Q"+i+".length");
+                //console.log(len2);               
+                for(var j=0 ; j<len2 ; j++){
+                    if(eval("document.Questionnare.Q" + i+ "[" + j + "].checked")){
+                        chkvalue += eval("document.Questionnare.Q" + i+ "[" + j + "].value") + ",";
+                        //console.log (len2 + "," + i + "," + j + "," +eval("document.Questionnare.Q" + i+ "[" + j + "].value"));
+                        
+                        //console.log(eval("document.Questionnare.Q" + i+ "[" + j + "].value"));
+                    }
+                    //console.log(j);
+                }
+            }
+            //textの値取得
+            if(eval("document.Questionnare.QQ"+i)){
+                chkvalue += $("#QQ"+i).val();
+            }
+            chkvalue += "|";
+            
+        }
+        alert(chkvalue);
+        //arData[i][1] = chkvalue;
+
+        // Save to local storage
+        addMemo(chkvalue);
+        // Go MemoPage
+
+        $.mobile.changePage("#QRPage", { reverse: true });
+        $("#data").val(chkvalue);        
+        
+        
+        
+        
+    }
+//データ収集終わり
+
+$(function() {
+    var updatetimer = null, updatepending = false;
+    var update = function() {
+		//location.hash = '#' + encodeURIComponent($('#data').val());
+		if (updatetimer != null) {
+			//clearTimeout(updatetimer);
+			updatepending = true;
+		} else {
+			var updatereal = function() {
+				try {
+					var options = {ecclevel: $('[name=ecclevel]:checked').val()};
+					var starttime, endtime;
+					if ($('#format').val() == 'png') {
+						starttime = +new Date();
+						var url = QRCode.generatePNG($('#data').val(), options);
+						endtime = +new Date();
+						$('#output').html('<img src="' + url + '">');
+					} else {
+						starttime = +new Date();
+						var table = QRCode.generateHTML($('#data').val(), options);
+						endtime = +new Date();
+						$('#output').empty().append(table);
+					}
+					$('#debug').text('Took ' + (endtime - starttime) + 'ms.');
+				} catch (e) {
+					$('#output').html('Error: ' + e);
+				}
+
+				if (updatepending) {
+					updatepending = false;
+					updatetimer = setTimeout(updatereal, 300);
+				} else {
+					updatetimer = null;
+				}
+			};
+			updatetimer = setTimeout(updatereal, 300);
+		}
+	};
+
+	$('[name=data]').keypress(update);
+	$('[name=data], [name=ecclevel], [name=format]').change(update);
+	//if (location.hash) $('#data').val(decodeURIComponent(location.hash.slice(1)));
+	update();
+});
+
+</script>
 </head>
 <body>
-        <ons-navigator page="page1.html" title="Page 1">
-        </ons-navigator>
+<!-- Index Page -->
+<div data-role="page" id="IndexPage"> 
+<form name="Questionnare">
+  <div class="box3"><h3> 情報入力画面</h3></div> 
+
+        <div class="box1">
+          名前を入れてください
+          <input type="text" name= "myname" id="myname" class="input-text" style="width: 50%">
+        </div>
+        <div class="box2">
+          年齢を入れてください
+          <input type="tel" name="myage" id="myage" class="input-text" style="width: 20%">
+        </div>
+    <br>
+    <div class="box3"><h3> 質問と答え</h3></div>
+        <div class="box3">
+        <div class="check-group clearfix">
+        <div id="add" >
+            
+            
+        </div>
+        </div>
+        </div>
+        <div id="log" >
+            
+            
+        </div>
+    
+    <h4><input type="button" onclick="checkvalue();" value="ありがとうございました"></h4>
+    </div>
+    
+</form>
+</div>
+<!-- QR Page -->
+<div data-role="page" id="QRPage">
+<form name="QRShowPage">
+
+	<textarea id=data name=data cols=60 rows=3></textarea><br>
+	ECC Level:
+	<input type=radio id=ecclevel-L name=ecclevel value=L checked><label for=ecclevel-L> L</label>
+	<input type=radio id=ecclevel-M name=ecclevel value=M><label for=ecclevel-M> M</label>
+	<input type=radio id=ecclevel-Q name=ecclevel value=Q><label for=ecclevel-Q> Q</label>
+	<input type=radio id=ecclevel-H name=ecclevel value=H><label for=ecclevel-H> H</label>
+	/ Format:
+	<select id=format name=format>
+		<option value=html selected>HTML</option>
+		<option value=png>PNG (requires canvas)</option>
+	</select>
+	<hr>
+	<div id=output></div>
+	<div id=debug></div>
+</form>
+</div>
 </body>
 </html>

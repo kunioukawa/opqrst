@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="components/loader.js"></script>
+  <link rel="stylesheet" href="components/loader.css">
+  <script src="js/memo.js"></script>
+  <script src="js/app2.js"></script>
+  <script>
+    monaca.viewport({width: 320});
+  </script>
+</head>
+<body>
+  <!-- TOP Page -->
+  <div data-role="page" id="TopPage"> 
+    <header data-role="header" data-position="fixed">
+      <h1>保存データ</h1>
+      <a href="#AddPage" data-icon="plus" class="ui-btn-right">追加</a>
+    </header>
+      <section data-role="content">
+      <ul id="TopListView" data-role="listview"
+        data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d" data-split-icon="delete">
+      </ul>
+  	</section> 
+  </div> 
+  
+  <!-- Add Memo Page -->
+  <div data-role="page" id="AddPage">
+    <header data-role="header" data-position="fixed">
+      <a data-role="button" data-rel="back" data-icon="back">Back</a>
+      <h1>データ追加</h1>
+    </header> 
+    <section data-role="content">
+      <label for="Memo">Memo:</label>
+      <textarea id="Memo"></textarea>
+      <a data-role="button" data-icon="check" id="SaveBtn">Save</a>
+    </section>
+  </div>
+  
+  <!-- Detail Page -->
+  <div data-role="page" id="ShowPage">
+    <header data-role="header" data-position="fixed">
+      <a data-role="button" data-rel="back" data-icon="back">Back</a>
+      <h1></h1>
+    </header> 
+    <section data-role="content">
+      <p></p>
+    </section>
+    <footer>
+        <a data-role="button" data-iconpos ="top" data-icon="star">QR code</a>
+    </footer>
+  </div>
+</body>
+</html>

@@ -4,13 +4,13 @@
   <description/>
   <author/>
 
-  <access origin="*"/>
   
-  <preference name="AutoHideSplashScreen" value="true"/>
-  <preference name="EnableViewportScale" value="true"/>
-  <preference name="FadeSplashScreen" value="true"/>
+  
+  
+  
+  
   <preference name="FadeSplashScreenDuration" value=".25"/>
-  <preference name="ShowSplashScreenSpinner" value="false"/>
+  
   <preference name="BackupWebStorage" value="cloud"/>
   <preference name="HideKeyboardFormAccessoryBar" value="false"/>
   <preference name="AllowInlineMediaPlayback" value="false"/>
@@ -19,7 +19,7 @@
   <preference name="MediaPlaybackRequiresUserAction" value="false"/>
   <preference name="SuppressesIncrementalRendering" value="false"/>
   <preference name="TopActivityIndicator" value="gray"/>
-  <preference name="DisallowOverscroll" value="true"/>
+  
   
   <feature name="Geolocation">
     <param name="ios-package" value="CDVLocation"/>
@@ -96,4 +96,4 @@
   <feature name="Monaca">
     <param name="ios-package" value="MFDevicePlugin"/>
   </feature>
-<preference name="monaca:DisableCookie" value="false"/><preference name="monaca:iosApplicationName" value="CANDY"/><preference name="monaca:targetFamilyiPhone" value="1"/><preference name="monaca:targetFamilyiPad" value="1"/></widget>
+<access origin="*"/><preference name="EnableViewportScale" value="true"/><preference name="AutoHideSplashScreen" value="true"/><preference name="DisallowOverscroll" value="true"/><preference name="FadeSplashScreen" value="true"/><preference name="ShowSplashScreenSpinner" value="false"/><preference name="monaca:DisableCookie" value="false"/><preference name="monaca:iosApplicationName" value="GumiCandy"/><preference name="monaca:targetFamilyiPhone" value="1"/><preference name="monaca:targetFamilyiPad" value="1"/></widget>

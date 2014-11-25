@@ -1,0 +1,41 @@
+{
+  "name": "monaca-jquery-mobile",
+  "version": "1.2.0",
+  "description": "Dist version of jQuery Mobile for Monaca Component.",
+  "main": "jquery.mobile.js",
+  "monaca": {
+    "main": [
+      "jquery.mobile.js"
+    ]
+  },
+  "dependencies": {
+    "monaca-jquery": "1.8.3"
+  },
+  "keywords": [
+    "monaca"
+  ],
+  "authors": [
+    "Monaca"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com:monaca/monaca-component-jquery-mobile.git"
+  },
+  "homepage": "http://monaca.mobi/",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test",
+    "README.md"
+  ],
+  "_release": "1.2.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.2.0",
+    "commit": "c55a87ef3a3938df984b344d1bffb142010f6faf"
+  },
+  "_source": "git://github.com/monaca/monaca-component-jquery-mobile.git",
+  "_target": "1.2.0",
+  "_originalSource": "monaca-jquery-mobile",
+  "_direct": true
+}
